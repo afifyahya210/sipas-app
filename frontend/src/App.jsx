@@ -60,21 +60,21 @@ export default function App() {
 
   useEffect(() => { if (selectedLab) fetchLabSchedule(selectedLab.id, scheduleDate) }, [selectedLab, scheduleDate])
 
-  const fetchLabs = () => fetch('http://localhost:3000/api/labs').then(res => res.json()).then(setLabs)
+  const fetchLabs = () => fetch(import.meta.env.VITE_API_URL + '/api/labs').then(res => res.json()).then(setLabs)
   
   const fetchBookings = () => {
-    let url = 'http://localhost:3000/api/bookings'
+    let url = import.meta.env.VITE_API_URL + '/api/bookings'
     if (currentUser && currentUser.role !== 'admin') url += `?user_id=${currentUser.id}`
     fetch(url).then(res => res.json()).then(data => setBookings(Array.isArray(data) ? data : [])).catch(() => setBookings([]))
   }
   
-  const fetchPendingUsers = () => fetch('http://localhost:3000/api/admin/pending-users').then(res => res.json()).then(setPendingUsers)
-  const fetchAllUsers = () => fetch('http://localhost:3000/api/admin/users').then(res => res.json()).then(setAllUsers)
+  const fetchPendingUsers = () => fetch(import.meta.env.VITE_API_URL + '/api/admin/pending-users').then(res => res.json()).then(setPendingUsers)
+  const fetchAllUsers = () => fetch(import.meta.env.VITE_API_URL + '/api/admin/users').then(res => res.json()).then(setAllUsers)
   const fetchLabSchedule = (labId, tanggal) => fetch(`http://localhost:3000/api/labs/${labId}/schedule?tanggal=${tanggal}`).then(res => res.json()).then(setLabSchedules)
 
   const handleLogin = (e) => {
     e.preventDefault()
-    fetch('http://localhost:3000/api/login', {
+    fetch(import.meta.env.VITE_API_URL + '/api/login', {
       method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: usernameInput, password: passwordInput })
     })
     .then(async res => { const data = await res.json(); if (!res.ok) throw new Error(data.message); return data })
@@ -90,7 +90,7 @@ export default function App() {
 
   const handleRegister = (e) => {
     e.preventDefault()
-    fetch('http://localhost:3000/api/register', {
+    fetch(import.meta.env.VITE_API_URL + '/api/register', {
       method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ nama: namaInput, username: usernameInput, password: passwordInput, role: roleInput })
     })
     .then(async res => { const data = await res.json(); if (!res.ok) throw new Error(data.message); return data })
