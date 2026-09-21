@@ -42,7 +42,7 @@ export default function GuruDashboard({
 
   // Fetch daftar fasilitas saat komponen dimuat
   useEffect(() => {
-    fetch('${import.meta.env.VITE_API_URL}/api/facilities')
+    fetch(`${import.meta.env.VITE_API_URL}/api/facilities`)
       .then(res => res.json())
       .then(data => setFacilities(Array.isArray(data) ? data : []))
   }, [])
@@ -88,7 +88,7 @@ export default function GuruDashboard({
       keperluan: formData.keperluan
     }
 
-    fetch('${import.meta.env.VITE_API_URL}/api/bookings', {
+    fetch(`${import.meta.env.VITE_API_URL}/api/bookings`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(dataToSend)
     })
     .then(async res => { const data = await res.json(); if (!res.ok) throw new Error(data.message); return data })
@@ -117,7 +117,7 @@ export default function GuruDashboard({
       keperluan: facFormData.keperluan
     }
 
-    fetch('${import.meta.env.VITE_API_URL}/api/bookings', {
+    fetch(`${import.meta.env.VITE_API_URL}/api/bookings`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(dataToSend)
     })
     .then(async res => { const data = await res.json(); if (!res.ok) throw new Error(data.message); return data })

@@ -18,7 +18,7 @@ export default function AdminDashboard({
   useEffect(() => { fetchFacilities() }, [])
 
   const fetchFacilities = () => {
-    fetch('${import.meta.env.VITE_API_URL}/api/facilities')
+    fetch(`${import.meta.env.VITE_API_URL}/api/facilities`)
       .then(res => res.json())
       .then(data => setFacilities(Array.isArray(data) ? data : []))
   }
@@ -61,7 +61,7 @@ export default function AdminDashboard({
     }).then((result) => {
       if (result.isConfirmed) {
         const { tglMulai, tglSelesai } = result.value;
-        let url = '${import.meta.env.VITE_API_URL}/api/admin/export-pdf';
+        let url = `${import.meta.env.VITE_API_URL}/api/admin/export-pdf`;
         
         if (tglMulai && tglSelesai) {
           url += `?tanggal_mulai=${tglMulai}&tanggal_selesai=${tglSelesai}`;
@@ -186,7 +186,7 @@ export default function AdminDashboard({
   };
 
   const handleSaveUserByAdminCustom = (formDataVal, idEdit) => {
-    const url = idEdit ? `${import.meta.env.VITE_API_URL}/api/admin/users/${idEdit}` : '${import.meta.env.VITE_API_URL}/api/admin/users'
+    const url = idEdit ? `${import.meta.env.VITE_API_URL}/api/admin/users/${idEdit}` : `${import.meta.env.VITE_API_URL}/api/admin/users`
     const bodyData = idEdit 
       ? { nama: formDataVal.nama, username: formDataVal.username, role: formDataVal.role, status_akun: 'aktif' } 
       : { nama: formDataVal.nama, username: formDataVal.username, password: formDataVal.password, role: formDataVal.role }
@@ -268,7 +268,7 @@ export default function AdminDashboard({
         setNewLabName(data.nama_lab);
         setNewLabCapacity(data.kapasitas);
         
-        const url = labToEdit ? `${import.meta.env.VITE_API_URL}/api/admin/labs/${labToEdit.id}` : '${import.meta.env.VITE_API_URL}/api/admin/labs'
+        const url = labToEdit ? `${import.meta.env.VITE_API_URL}/api/admin/labs/${labToEdit.id}` : `${import.meta.env.VITE_API_URL}/api/admin/labs`
         fetch(url, {
           method: labToEdit ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data)
         })
@@ -337,7 +337,7 @@ export default function AdminDashboard({
     }).then((result) => {
       if (result.isConfirmed) {
         const data = result.value;
-        const url = facToEdit ? `${import.meta.env.VITE_API_URL}/api/admin/facilities/${facToEdit.id}` : '${import.meta.env.VITE_API_URL}/api/admin/facilities';
+        const url = facToEdit ? `${import.meta.env.VITE_API_URL}/api/admin/facilities/${facToEdit.id}` : `${import.meta.env.VITE_API_URL}/api/admin/facilities`;
         
         fetch(url, {
           method: facToEdit ? 'PUT' : 'POST', 
