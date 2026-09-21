@@ -404,9 +404,18 @@ app.put('/api/admin/labs/:id', (req, res) => {
 });
 
 app.delete('/api/admin/labs/:id', (req, res) => {
-  db.run("DELETE FROM laboratories WHERE id = ?", [req.params.id], function(err) {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json({ message: "Lab berhasil dihapus!" });
+  const labId = req.params.id;
+
+  // TAHAP 1: Hapus semua barang yang terikat dengan ruangan ini
+  // CATATAN: Ubah 'items' dan 'lab_id' sesuai dengan nama tabel barang Anda di database
+  db.run("DELETE FROM items WHERE lab_id = ?", [labId], function(err) {
+    if (err) return res.status(500).json({ error: "Gagal menghapus barang: " + err.message });
+    
+    // TAHAP 2: Jika barang sudah bersih, baru hapus ruangannya
+    db.run("DELETE FROM laboratories WHERE id = ?", [labId], function(err) {
+      if (err) return res.status(500).json({ error: "Gagal menghapus lab: " + err.message });
+      res.json({ message: "Lab beserta seluruh barang di dalamnya berhasil dihapus!" });
+    });
   });
 });
 
