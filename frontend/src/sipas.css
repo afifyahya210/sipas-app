@@ -1,0 +1,851 @@
+/* ==========================================================================
+   SIPAS.CSS - Living Typography & Soft Light Glassmorphism System
+   ========================================================================== */
+
+/* --- 1. IMPORT GOOGLE FONTS --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700&display=swap');
+
+/* --- 2. GLOBAL TYPOGRAPHY & ANIMATIONS --- */
+html {
+  /* INI KUNCINYA: Membesarkan seluruh skala aplikasi (teks, jarak, kotak) sebesar 10% secara native */
+  font-size: 110%; 
+}
+
+@keyframes lightGradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: #334155; 
+  background: linear-gradient(135deg, #e0f2fe, #f0fdf4, #e0e7ff, #f8fafc);
+  background-size: 300% 300%;
+  animation: lightGradientBG 18s ease infinite;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+/* PENGATURAN JUDUL (MENGGUNAKAN POPPINS) */
+h1, h2, h3, h4, h5, h6, .sipas-title {
+  font-family: 'Poppins', sans-serif;
+  color: #0f172a; 
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  margin: 0;
+}
+
+button, input, select, textarea {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+}
+
+@keyframes smoothFadeIn {
+  0% { opacity: 0; transform: translateY(8px) scale(0.99); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.admin-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  animation: smoothFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sipas-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .sipas-grid-2 { 
+    grid-template-columns: 1fr 1fr; 
+  }
+}
+
+.header-navigation {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  animation: smoothFadeIn 0.3s ease;
+}
+
+/* --- SIPAS NAVBAR GLASSMORPHISM --- */
+.sipas-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.05);
+}
+
+.sipas-navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sipas-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  user-select: none;
+}
+
+.sipas-logo-wrapper {
+  width: 2.85rem; 
+  height: 2.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.95); 
+  border: 2px solid #cbd5e1; 
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08), inset 0 2px 4px rgba(255, 255, 255, 0.8);
+  padding: 0.25rem; 
+  overflow: hidden;
+}
+
+.sipas-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; 
+}
+
+.sipas-logo-fallback {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.sipas-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.sipas-brand-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  background: linear-gradient(135deg, #1e293b, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sipas-brand-subtitle {
+  font-size: 0.7rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* User Profile Pill & Dropdown */
+.sipas-user-section {
+  position: relative;
+}
+
+.sipas-profile-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 0.85rem 0.4rem 0.4rem;
+  background: rgba(241, 245, 249, 0.8);
+  border: 1px solid rgba(203, 213, 225, 0.6);
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sipas-profile-pill:hover, .sipas-profile-pill.active {
+  background: #ffffff;
+  border-color: #93c5fd;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+}
+
+.sipas-avatar {
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+}
+
+.sipas-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.sipas-user-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1.2;
+}
+
+.sipas-role-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.role-admin { color: #2563eb; }
+.role-guru { color: #059669; }
+
+.sipas-chevron {
+  font-size: 0.6rem;
+  color: #94a3b8;
+  margin-left: 0.25rem;
+}
+
+/* Dropdown Menu Floating Card */
+.sipas-dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.5rem);
+  width: 13.75rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 14px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  padding: 0.5rem;
+  z-index: 100;
+}
+
+.sipas-dropdown-header {
+  padding: 0.5rem 0.75rem;
+}
+
+.sipas-dropdown-user {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #0f172a;
+  margin: 0;
+}
+
+.sipas-dropdown-username {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.sipas-dropdown-divider {
+  height: 1px;
+  background: #e2e8f0;
+  margin: 0.35rem 0;
+}
+
+.sipas-dropdown-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.5rem;
+  border: none;
+  background: transparent;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  text-align: left;
+}
+
+.primary-item { color: #334155; }
+.primary-item:hover { background: #f1f5f9; color: #2563eb; }
+
+.danger-item { color: #e11d48; }
+.danger-item:hover { background: #fff1f2; }
+
+/* --- 2. CARDS & LAYOUT --- */
+.sipas-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 1.75rem;
+  padding: 2.25rem;
+  box-shadow: 0 20px 40px -15px rgba(30, 41, 59, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  animation: smoothFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sipas-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.sipas-card-title-group {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.sipas-title { 
+  font-size: 1.25rem; 
+}
+
+.sipas-subtitle { 
+  margin: 0.25rem 0 0 0; 
+  font-size: 0.85rem; 
+  color: #64748b; 
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+
+/* --- 3. ICONS --- */
+.sipas-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.sipas-icon.yellow { background: #fef3c7; color: #d97706; }
+.sipas-icon.blue { background: #dbeafe; color: #2563eb; }
+.sipas-icon.green { background: #d1fae5; color: #059669; }
+.sipas-icon.purple { background: #f3e8ff; color: #7e22ce; }
+
+.sipas-icon.unified {
+  width: 3.5rem;
+  height: 3.5rem;
+  background: rgba(37, 99, 235, 0.1);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
+}
+
+.admin-menu-card:hover .sipas-icon.unified {
+  background: rgba(37, 99, 235, 0.18);
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: scale(1.05);
+}
+
+
+/* --- 4. FORMS & INPUTS --- */
+.sipas-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  background: rgba(248, 250, 252, 0.7);
+  padding: 1.75rem;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  margin-bottom: 1.75rem;
+  align-items: flex-end;
+}
+
+.sipas-form-group {
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sipas-form-group label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 0.45rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em; 
+}
+
+.sipas-input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #0f172a;
+  background: #ffffff;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.sipas-input::placeholder {
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+.sipas-input:focus { 
+  border-color: #2563eb; 
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+select.sipas-input { 
+  cursor: pointer; 
+}
+
+
+/* --- 5. BUTTONS --- */
+.sipas-btn {
+  padding: 0.8rem 1.35rem;
+  border-radius: 0.85rem;
+  font-weight: 500; 
+  font-size: 0.85rem;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.sipas-btn:active { 
+  transform: scale(0.97); 
+}
+
+.sipas-btn.primary { background: #2563eb; color: white; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25); }
+.sipas-btn.primary:hover { background: #1d4ed8; transform: translateY(-1px); }
+
+.sipas-btn.success { background: #059669; color: white; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25); }
+.sipas-btn.success:hover { background: #047857; transform: translateY(-1px); }
+
+.sipas-btn.danger { background: #ffe4e6; color: #e11d48; }
+.sipas-btn.danger:hover { background: #fecdd3; }
+
+.sipas-btn.warning { background: #fef3c7; color: #d97706; }
+.sipas-btn.warning:hover { background: #fde68a; }
+
+.sipas-btn.secondary { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+.sipas-btn.secondary:hover { background: #e2e8f0; color: #1e293b; }
+
+.sipas-btn.sm { 
+  padding: 0.5rem 0.85rem; 
+  font-size: 0.75rem; 
+  border-radius: 0.6rem;
+}
+
+
+/* --- 6. TABLES --- */
+.sipas-table-container {
+  overflow-x: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 1.15rem;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.sipas-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: transparent;
+}
+
+.sipas-table th {
+  font-family: 'Poppins', sans-serif;
+  background: rgba(248, 250, 252, 0.8);
+  color: #475569;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 1rem 1.15rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.sipas-table td {
+  padding: 1rem 1.15rem;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.sipas-table td strong {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.sipas-table tr:hover { 
+  background: rgba(248, 250, 252, 0.6); 
+}
+
+.sipas-table th.center, 
+.sipas-table td.center { 
+  text-align: center; 
+}
+
+
+/* --- 7. STATES & BADGES --- */
+.sipas-badge {
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: inline-block;
+}
+
+.sipas-badge.green { background: #d1fae5; color: #059669; }
+.sipas-badge.yellow { background: #fef3c7; color: #b45309; }
+.sipas-badge.indigo { background: #e0e7ff; color: #4338ca; }
+.sipas-badge.danger { background: #ffe4e6; color: #e11d48; }
+
+.action-group {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.empty-state {
+  padding: 2.5rem 1rem;
+  background: #f8fafc;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 1rem;
+  text-align: center;
+  color: #64748b;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+
+/* --- 8. ADMIN MENU CARDS & NOTIFICATIONS --- */
+.admin-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1.5rem;
+  animation: smoothFadeIn 0.4s ease;
+}
+
+.admin-menu-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 1.75rem;
+  padding: 2.25rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 15px 35px -10px rgba(30, 41, 59, 0.06);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.admin-menu-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.12);
+  border-color: #93c5fd;
+}
+
+.admin-menu-card .sipas-icon {
+  width: 4.2rem;
+  height: 4.2rem;
+  font-size: 2rem;
+  border-radius: 1.2rem;
+}
+
+.sipas-icon-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.sipas-notif-badge {
+  position: absolute;
+  top: -0.35rem;
+  right: -0.35rem;
+  background: #e11d48;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 600;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding: 0 5px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2.5px solid white;
+  box-shadow: 0 4px 6px -1px rgba(225, 29, 72, 0.3);
+  animation: pulse-red 2s infinite;
+  z-index: 10;
+}
+
+@keyframes pulse-red {
+  0% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.4); }
+  70% { box-shadow: 0 0 0 7px rgba(225, 29, 72, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); }
+}
+
+
+/* --- 9. LOGIN / REGISTER PAGE --- */
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.login-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0b2545, #134074, #1d5b9e, #2874bc);
+  background-size: 300% 300%;
+  animation: gradientBG 12s ease infinite;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-page-wrapper::before,
+.login-page-wrapper::after {
+  content: '';
+  position: absolute;
+  width: 25rem;
+  height: 25rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+  filter: blur(60px);
+  z-index: 0;
+}
+.login-page-wrapper::before {
+  top: -6rem;
+  left: -6rem;
+}
+.login-page-wrapper::after {
+  bottom: -6rem;
+  right: -6rem;
+}
+
+.login-glass-card {
+  position: relative;
+  z-index: 10;
+  background: rgba(20, 50, 90, 0.35);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 1.75rem;
+  padding: 2.75rem 2.5rem;
+  width: 100%;
+  max-width: 25rem;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  text-align: center;
+  animation: smoothFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.login-glass-card .login-logo {
+  width: 4.2rem;
+  height: 4.2rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem auto;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.4rem;
+}
+
+.login-glass-card .login-title {
+  font-size: 1.5rem;
+  color: #ffffff;
+  margin-bottom: 0.25rem;
+}
+
+.login-glass-card .login-subtitle {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+
+.login-glass-card .login-form-group {
+  text-align: left;
+  margin-bottom: 1.1rem;
+}
+
+.login-glass-card .login-form-group label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.login-glass-card .login-input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #ffffff;
+  background: rgba(10, 25, 50, 0.4);
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.25s ease;
+}
+
+.login-glass-card .login-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 300;
+}
+
+.login-glass-card .login-input:focus {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(10, 25, 50, 0.6);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
+}
+
+.login-glass-card .login-input option {
+  background: #134074;
+  color: #ffffff;
+}
+
+.login-glass-card .login-btn-submit {
+  width: 100%;
+  padding: 0.9rem;
+  background: #ffffff;
+  color: #0b2545;
+  border: none;
+  border-radius: 0.85rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-top: 0.75rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.login-glass-card .login-btn-submit:hover {
+  background: #f1f5f9;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+}
+
+.login-glass-card .login-btn-submit:active {
+  transform: translateY(0);
+}
+
+.login-glass-card .login-toggle-text {
+  margin-top: 1.75rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
+}
+
+.login-glass-card .login-toggle-link {
+  color: #60a5fa;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s;
+  margin-left: 0.3rem;
+}
+
+.login-glass-card .login-toggle-link:hover {
+  color: #93c5fd;
+  text-decoration: underline;
+}
+
+/* --- ADMIN DASHBOARD STATS GRID --- */
+.sipas-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13.75rem, 1fr));
+  gap: 1.25rem;
+}
+
+.sipas-stat-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 4px 15px -5px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sipas-stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px -8px rgba(37, 99, 235, 0.15);
+  border-color: #bfdbfe;
+}
+
+.stat-icon {
+  width: 3.375rem;
+  height: 3.375rem;
+  border-radius: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
