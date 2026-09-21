@@ -18,7 +18,7 @@ export default function AdminDashboard({
   useEffect(() => { fetchFacilities() }, [])
 
   const fetchFacilities = () => {
-    fetch('http://localhost:3000/api/facilities')
+    fetch('${import.meta.env.VITE_API_URL}/api/facilities')
       .then(res => res.json())
       .then(data => setFacilities(Array.isArray(data) ? data : []))
   }
@@ -61,7 +61,7 @@ export default function AdminDashboard({
     }).then((result) => {
       if (result.isConfirmed) {
         const { tglMulai, tglSelesai } = result.value;
-        let url = 'http://localhost:3000/api/admin/export-pdf';
+        let url = '${import.meta.env.VITE_API_URL}/api/admin/export-pdf';
         
         if (tglMulai && tglSelesai) {
           url += `?tanggal_mulai=${tglMulai}&tanggal_selesai=${tglSelesai}`;
@@ -186,7 +186,7 @@ export default function AdminDashboard({
   };
 
   const handleSaveUserByAdminCustom = (formDataVal, idEdit) => {
-    const url = idEdit ? `http://localhost:3000/api/admin/users/${idEdit}` : 'http://localhost:3000/api/admin/users'
+    const url = idEdit ? `${import.meta.env.VITE_API_URL}/api/admin/users/${idEdit}` : '${import.meta.env.VITE_API_URL}/api/admin/users'
     const bodyData = idEdit 
       ? { nama: formDataVal.nama, username: formDataVal.username, role: formDataVal.role, status_akun: 'aktif' } 
       : { nama: formDataVal.nama, username: formDataVal.username, password: formDataVal.password, role: formDataVal.role }
@@ -268,7 +268,7 @@ export default function AdminDashboard({
         setNewLabName(data.nama_lab);
         setNewLabCapacity(data.kapasitas);
         
-        const url = labToEdit ? `http://localhost:3000/api/admin/labs/${labToEdit.id}` : 'http://localhost:3000/api/admin/labs'
+        const url = labToEdit ? `${import.meta.env.VITE_API_URL}/api/admin/labs/${labToEdit.id}` : '${import.meta.env.VITE_API_URL}/api/admin/labs'
         fetch(url, {
           method: labToEdit ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data)
         })
@@ -337,7 +337,7 @@ export default function AdminDashboard({
     }).then((result) => {
       if (result.isConfirmed) {
         const data = result.value;
-        const url = facToEdit ? `http://localhost:3000/api/admin/facilities/${facToEdit.id}` : 'http://localhost:3000/api/admin/facilities';
+        const url = facToEdit ? `${import.meta.env.VITE_API_URL}/api/admin/facilities/${facToEdit.id}` : '${import.meta.env.VITE_API_URL}/api/admin/facilities';
         
         fetch(url, {
           method: facToEdit ? 'PUT' : 'POST', 
@@ -358,7 +358,7 @@ export default function AdminDashboard({
       title: 'Hapus fasilitas ini?', text: "Data tidak bisa dikembalikan!", icon: 'warning', showCancelButton: true, confirmButtonColor: '#e11d48', confirmButtonText: 'Ya, Hapus!'
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/api/admin/facilities/${id}`, { method: 'DELETE' })
+        fetch(`${import.meta.env.VITE_API_URL}/api/admin/facilities/${id}`, { method: 'DELETE' })
           .then(res => res.json()).then(data => { Swal.fire('Terhapus!', data.message, 'success'); fetchFacilities(); })
       }
     })

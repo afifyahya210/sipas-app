@@ -70,7 +70,7 @@ export default function App() {
   
   const fetchPendingUsers = () => fetch(import.meta.env.VITE_API_URL + '/api/admin/pending-users').then(res => res.json()).then(setPendingUsers)
   const fetchAllUsers = () => fetch(import.meta.env.VITE_API_URL + '/api/admin/users').then(res => res.json()).then(setAllUsers)
-  const fetchLabSchedule = (labId, tanggal) => fetch(`http://localhost:3000/api/labs/${labId}/schedule?tanggal=${tanggal}`).then(res => res.json()).then(setLabSchedules)
+  const fetchLabSchedule = (labId, tanggal) => fetch(`${import.meta.env.VITE_API_URL}/api/labs/${labId}/schedule?tanggal=${tanggal}`).then(res => res.json()).then(setLabSchedules)
 
   const handleLogin = (e) => {
     e.preventDefault()
@@ -105,7 +105,7 @@ export default function App() {
     Swal.fire({
       title: 'Hapus user ini?', text: "Data pengguna akan dihapus permanen!", icon: 'warning', showCancelButton: true, confirmButtonColor: '#e11d48', confirmButtonText: 'Ya, Hapus!'
     }).then((result) => {
-      if (result.isConfirmed) fetch(`http://localhost:3000/api/admin/users/${id}`, { method: 'DELETE' }).then(res => res.json()).then(data => { Swal.fire('Terhapus!', data.message, 'success'); fetchAllUsers(); })
+      if (result.isConfirmed) fetch(`${import.meta.env.VITE_API_URL}/api/admin/users/${id}`, { method: 'DELETE' }).then(res => res.json()).then(data => { Swal.fire('Terhapus!', data.message, 'success'); fetchAllUsers(); })
     })
   }
 
@@ -115,20 +115,20 @@ export default function App() {
       inputValidator: (value) => { if (!value) return 'Password tidak boleh kosong!' }
     })
     if (passwordBaru) {
-      fetch(`http://localhost:3000/api/admin/users/reset-password/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password_baru: passwordBaru }) })
+      fetch(`${import.meta.env.VITE_API_URL}/api/admin/users/reset-password/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password_baru: passwordBaru }) })
       .then(res => res.json()).then(data => Swal.fire('Berhasil!', data.message, 'success'))
     }
   }
 
   const handleUserApproval = (userId, aksi) => {
-    fetch(`http://localhost:3000/api/admin/approve-user/${userId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ aksi }) })
+    fetch(`${import.meta.env.VITE_API_URL}/api/admin/approve-user/${userId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ aksi }) })
     .then(res => res.json()).then(data => { Swal.fire('Selesai!', data.message, 'success'); fetchPendingUsers(); fetchAllUsers(); })
   }
 
   const handleInputChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
 
   const handleApproval = (id, newStatus, alasan = '') => {
-    fetch(`http://localhost:3000/api/bookings/${id}`, { 
+    fetch(`${import.meta.env.VITE_API_URL}/api/bookings/${id}`, { 
       method: 'PUT', 
       headers: { 'Content-Type': 'application/json' }, 
       body: JSON.stringify({ status_approval: newStatus, alasan_penolakan: alasan }) 
@@ -160,7 +160,7 @@ export default function App() {
       cancelButtonText: 'Tutup'
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/api/bookings/${booking.id}`, { method: 'DELETE' })
+        fetch(`${import.meta.env.VITE_API_URL}/api/bookings/${booking.id}`, { method: 'DELETE' })
         .then(res => res.json())
         .then(data => {
           Swal.fire('Dibatalkan!', data.message, 'success');

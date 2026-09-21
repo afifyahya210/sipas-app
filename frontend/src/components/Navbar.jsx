@@ -20,7 +20,7 @@ export default function Navbar({ currentUser, setCurrentUser, onHomeClick }) {
 
   const fetchNotifs = () => {
     if (!currentUser || !currentUser.id) return;
-    fetch(`http://localhost:3000/api/notifications/${currentUser.id}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/notifications/${currentUser.id}`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) setNotifications(data);
@@ -35,7 +35,7 @@ export default function Navbar({ currentUser, setCurrentUser, onHomeClick }) {
 
     setNotifOpen(!notifOpen);
     if (!notifOpen && currentUser && currentUser.id) {
-      fetch(`http://localhost:3000/api/notifications/read/${currentUser.id}`, { method: 'PUT' })
+      fetch(`${import.meta.env.VITE_API_URL}/api/notifications/read/${currentUser.id}`, { method: 'PUT' })
         .then(() => {
           setNotifications(notifications.map(n => ({ ...n, dibaca: 1 })));
         })
@@ -88,7 +88,7 @@ export default function Navbar({ currentUser, setCurrentUser, onHomeClick }) {
     }).then((result) => {
       if (result.isConfirmed) {
         const data = result.value;
-        fetch(`http://localhost:3000/api/users/${currentUser.id}/change-password`, {
+        fetch(`${import.meta.env.VITE_API_URL}/api/users/${currentUser.id}/change-password`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
@@ -107,7 +107,7 @@ export default function Navbar({ currentUser, setCurrentUser, onHomeClick }) {
   // --- POPUP MODAL: GANTI / HAPUS FOTO PROFIL ---
   const handleChangePhoto = () => {
     const executePhotoUpdate = (fotoData) => {
-      fetch(`http://localhost:3000/api/users/${currentUser.id}/change-photo`, {
+      fetch(`${import.meta.env.VITE_API_URL}/api/users/${currentUser.id}/change-photo`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ foto_profil: fotoData })
@@ -278,7 +278,7 @@ export default function Navbar({ currentUser, setCurrentUser, onHomeClick }) {
     }).then((result) => {
       if (result.isConfirmed) {
         const data = result.value;
-        fetch(`http://localhost:3000/api/users/${currentUser.id}`, {
+        fetch(`${import.meta.env.VITE_API_URL}/api/users/${currentUser.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
