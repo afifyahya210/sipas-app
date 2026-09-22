@@ -60,21 +60,21 @@ export default function App() {
 
   useEffect(() => { if (selectedLab) fetchLabSchedule(selectedLab.id, scheduleDate) }, [selectedLab, scheduleDate])
 
-  const fetchLabs = () => fetch(import.meta.env.VITE_API_URL + '/api/labs').then(res => res.json()).then(setLabs)
+  const fetchLabs = () => fetch(`${import.meta.env.VITE_API_URL}/api/labs`).then(res => res.json()).then(setLabs)
   
   const fetchBookings = () => {
-    let url = import.meta.env.VITE_API_URL + '/api/bookings'
+    let url = `${import.meta.env.VITE_API_URL}/api/bookings`
     if (currentUser && currentUser.role !== 'admin') url += `?user_id=${currentUser.id}`
     fetch(url).then(res => res.json()).then(data => setBookings(Array.isArray(data) ? data : [])).catch(() => setBookings([]))
   }
   
-  const fetchPendingUsers = () => fetch(import.meta.env.VITE_API_URL + '/api/admin/pending-users').then(res => res.json()).then(setPendingUsers)
-  const fetchAllUsers = () => fetch(import.meta.env.VITE_API_URL + '/api/admin/users').then(res => res.json()).then(setAllUsers)
+  const fetchPendingUsers = () => fetch(`${import.meta.env.VITE_API_URL}/api/admin/pending-users`).then(res => res.json()).then(setPendingUsers)
+  const fetchAllUsers = () => fetch(`${import.meta.env.VITE_API_URL}/api/admin/users`).then(res => res.json()).then(setAllUsers)
   const fetchLabSchedule = (labId, tanggal) => fetch(`${import.meta.env.VITE_API_URL}/api/labs/${labId}/schedule?tanggal=${tanggal}`).then(res => res.json()).then(setLabSchedules)
 
   const handleLogin = (e) => {
     e.preventDefault()
-    fetch(import.meta.env.VITE_API_URL + '/api/login', {
+    fetch(`${import.meta.env.VITE_API_URL}/api/login`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: usernameInput, password: passwordInput })
     })
     .then(async res => { const data = await res.json(); if (!res.ok) throw new Error(data.message); return data })
@@ -90,7 +90,7 @@ export default function App() {
 
   const handleRegister = (e) => {
     e.preventDefault()
-    fetch(import.meta.env.VITE_API_URL + '/api/register', {
+    fetch(`${import.meta.env.VITE_API_URL}/api/register`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ nama: namaInput, username: usernameInput, password: passwordInput, role: roleInput })
     })
     .then(async res => { const data = await res.json(); if (!res.ok) throw new Error(data.message); return data })
@@ -106,6 +106,28 @@ export default function App() {
       title: 'Hapus user ini?', text: "Data pengguna akan dihapus permanen!", icon: 'warning', showCancelButton: true, confirmButtonColor: '#e11d48', confirmButtonText: 'Ya, Hapus!'
     }).then((result) => {
       if (result.isConfirmed) fetch(`${import.meta.env.VITE_API_URL}/api/admin/users/${id}`, { method: 'DELETE' }).then(res => res.json()).then(data => { Swal.fire('Terhapus!', data.message, 'success'); fetchAllUsers(); })
+    })
+  }
+
+  // FUNGSI BARU UNTUK MEMADAM LAB
+  const handleDeleteLab = (id) => {
+    Swal.fire({
+      title: 'Hapus ruangan ini?', 
+      text: "Data ruangan beserta semua barang di dalamnya akan dihapus secara kekal!", 
+      icon: 'warning', 
+      showCancelButton: true, 
+      confirmButtonColor: '#e11d48', 
+      confirmButtonText: 'Ya, Hapus!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`${import.meta.env.VITE_API_URL}/api/admin/labs/${id}`, { method: 'DELETE' })
+          .then(res => res.json())
+          .then(data => { 
+            Swal.fire('Terhapus!', data.message, 'success'); 
+            fetchLabs(); 
+          })
+          .catch(err => Swal.fire('Ralat', 'Gagal memadam ruangan', 'error'));
+      }
     })
   }
 
@@ -187,7 +209,6 @@ export default function App() {
   const isAdmin = currentUser.role === 'admin';
 
   return (
-    // Bagian style inline backgroundColor: '#f8fafc' dihapus agar CSS gradasi bawaan Anda kembali berfungsi
     <div className="min-h-screen text-slate-800 font-sans" style={{ display: 'flex', flexDirection: 'column' }}>
       
       {/* NAVBAR */}
@@ -216,6 +237,7 @@ export default function App() {
               handleUserApproval={handleUserApproval} 
               handleResetPassword={handleResetPassword} 
               handleDeleteUser={handleDeleteUser} 
+              handleDeleteLab={handleDeleteLab} // PROP BARU DITAMBAHKAN DI SINI
               bookings={bookings} 
               handleApproval={handleApproval} 
             />
